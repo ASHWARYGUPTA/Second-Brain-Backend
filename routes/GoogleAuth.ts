@@ -31,15 +31,16 @@ router.post("/",async(req:Request,res:Response)=>{
 
         // Add 100 days to the futureDate
         futureDate.setDate(today.getDate() + 100);
-
-        res.cookie("token",req.body.token,{expires:futureDate,secure:false});
-        if(process.env.JWT_SECRET_KEY) {
-            req.body.token = jwt.sign(
-                {
-                    _id:user._id.toString(),
-                    username:user.username
-                },process.env.JWT_SECRET_KEY)
+        if(!process.env.JWT_SECRET_KEY) {
+            return;
         }
+        const tokenData = req.body.token = jwt.sign(
+            {
+                _id:user._id.toString(),
+                username:user.username
+            },process.env.JWT_SECRET_KEY)
+        res.cookie("token",tokenData,{expires:futureDate,secure:false});
+        
         res.status(200).json({
             message:"Successfull",
             value:true
@@ -49,14 +50,14 @@ router.post("/",async(req:Request,res:Response)=>{
     else{
         try {
             try {
-                const user = await UserModel.create({
+                const userInside = await UserModel.create({
                     username:req.body.username,
                     email:req.body.email,
                     name:req.body.name
                 }); 
                 await LinkModel.create({
-                    hash:sha256(user._id.toString()),
-                    userId:user._id.toString(),
+                    hash:sha256(userInside._id.toString()),
+                    userId:userInside._id.toString(),
                     sharable:false
                 })
                 const today = new Date();
@@ -64,15 +65,16 @@ router.post("/",async(req:Request,res:Response)=>{
 
                 // Add 100 days to the futureDate
                 futureDate.setDate(today.getDate() + 100);
-
-                res.cookie("token",req.body.token,{expires:futureDate,secure:false});
-                if(process.env.JWT_SECRET_KEY) {
-                    req.body.token = jwt.sign(
-                        {
-                            _id:user._id.toString(),
-                            username:user.username
-                        },process.env.JWT_SECRET_KEY)
+                if(!process.env.JWT_SECRET_KEY) {
+                    return;
                 }
+                const tokenData = req.body.token = jwt.sign(
+                    {
+                        _id:userInside._id.toString(),
+                        username:userInside.username
+                    },process.env.JWT_SECRET_KEY)
+                res.cookie("token",tokenData,{expires:futureDate,secure:false});
+                
                 res.status(200).json({
                     message:"Data Sent Successfully",
                     value:true
