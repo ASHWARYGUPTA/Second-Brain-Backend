@@ -13,7 +13,7 @@ router.use(express.json());
 router.use(cookieParser());
 
 router.use(cors({
-    origin: 'https://second-brain-frontend.vercel.app', // Your frontend URL
+    origin: 'https://second-brain-frontend.vercel.app/', // Your frontend URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
     credentials: true, // Include credentials if needed (e.g., cookies)
     
@@ -28,7 +28,12 @@ router.post("/",verifyUserLogin,async (req:Request,res:Response)=>{
     futureDate.setDate(today.getDate() + 100);
 
 
-    res.cookie("token",req.body.token,{expires:futureDate,secure:false});
+    res.cookie("token",req.body.token,{
+        expires:futureDate,
+        secure:true,
+        httpOnly:true,
+        sameSite:"none"
+    });
     if(req.body.token){
         res.status(200).json({
             token:req.body.token,

@@ -14,7 +14,7 @@ router.use(express.json());
 router.use(cookieParser());
 
 router.use(cors({
-    origin: 'https://second-brain-frontend.vercel.app', // Your frontend URL
+    origin: 'https://second-brain-frontend.vercel.app/', // Your frontend URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
     credentials: true, // Include credentials if needed (e.g., cookies)
   }));
@@ -39,7 +39,12 @@ router.post("/",async(req:Request,res:Response)=>{
                 _id:user._id.toString(),
                 username:user.username
             },process.env.JWT_SECRET_KEY)
-        res.cookie("token",tokenData,{expires:futureDate,secure:false});
+        res.cookie("token",tokenData,{
+            expires:futureDate,
+            secure:true,
+            httpOnly:true,
+            sameSite:"none"
+        });
         
         res.status(200).json({
             message:"Successfull",
