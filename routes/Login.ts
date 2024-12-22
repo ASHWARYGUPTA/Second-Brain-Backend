@@ -13,7 +13,7 @@ router.use(express.json());
 router.use(cookieParser());
 
 router.use(cors({
-    origin: ['http://localhost:5173',"https://second-brain-frontend-cswfqt0yd-ashwaryguptas-projects.vercel.app"], // Your frontend URL
+    origin: 'http://localhost:5173', // Your frontend URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
     credentials: true, // Include credentials if needed (e.g., cookies)
     
