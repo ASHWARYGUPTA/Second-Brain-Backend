@@ -28,7 +28,7 @@ app.use(express.json());
 // app.use(cookieParser());
 
 app.use(cors({
-    origin: 'https://second-brain-frontend.vercel.app/', // Your frontend URL
+    origin: 'https://second-brain-frontend.vercel.app', // Your frontend URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
     credentials: true, // Include credentials if needed (e.g., cookies)
   }));
