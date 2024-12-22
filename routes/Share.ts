@@ -31,7 +31,7 @@ router.post("/",async (req,res)=>{
             userLink.save();
             res.status(200).json({
                 message:"Sharable turned on",
-                link:`http://localhost:3000/api/v1/sharable/${userLink.hash}`
+                link:`https://second-brain-frontend.vercel.app/api/v1/sharable/${userLink.hash}`
             })
         }
 
