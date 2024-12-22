@@ -15,11 +15,11 @@ route.use(cookieParser());
 
 route.post("/",VerifyLoggedIn,async (req:Request,res:Response,next:NextFunction)=>{
     try{
-        const arr = req.body.tags;
+        const arr:Array<String> = req.body.tags;
         const arr2 = [];
         for(let i = 0 ; i < arr.length ; i++){
             const tag = await TagsModel.findOne({title:arr[i]});
-            console.log(tag);
+            // console.log(tag);
             if(tag){
                 arr2.push(tag);
             }
@@ -31,7 +31,6 @@ route.post("/",VerifyLoggedIn,async (req:Request,res:Response,next:NextFunction)
         const post = await ContentModel.create({
             typeLink:req.body.typeLink,
             text:req.body.text,
-            type: req.body.type,
             link: req.body.link,
             title: req.body.title,
             heading:req.body.heading,
@@ -52,11 +51,13 @@ route.post("/",VerifyLoggedIn,async (req:Request,res:Response,next:NextFunction)
         })
 
         res.status(200).json({
-            message:"Post Added Successfully"
+            message:"Post Added Successfully",
+            value:true
         })
         return;
 
     }catch(err){
+        console.log(err);
         res.status(400).json({
             message:"Error Occured",
             error:err
