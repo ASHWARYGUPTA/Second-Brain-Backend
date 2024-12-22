@@ -42,13 +42,15 @@ router.post("/",ValidateInput,async (req:Request,res:Response)=>{
         }
         
         res.status(200).json({
-            message:"Data Sent Successfully"
+            message:"Data Sent Successfully",
+            value:true
         })
         return;
     } catch (error) {
         res.json(401).json({
             message:"An Error Occured",
-            error:error
+            error:error,
+            value:false
         })
     }
 
