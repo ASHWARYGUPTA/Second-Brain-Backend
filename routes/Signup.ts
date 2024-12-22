@@ -4,10 +4,13 @@ import { UserSignInZod } from "./zodSchema";
 import * as bcrypt from "bcrypt";
 import { LinkModel, UserModel } from "./Schema";
 import sha256 from "sha256";
+import cors from "cors";
+
 
 const router:Router = express.Router();
 
 router.use(express.json());
+router.use(cors());
 
 const ValidateInput = async (req:Request,res:Response,next:NextFunction)=>{
     try{
