@@ -62,6 +62,7 @@ router.get("/logout",VerifyLoggedIn,async (req,res)=>{
         res.cookie('token', 'none', {
             expires: new Date(Date.now() + 1 * 1000),
             httpOnly: true,
+            secure:true
         })
     
         res.status(200).json({
