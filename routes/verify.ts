@@ -44,7 +44,7 @@ const VerifyLoggedIn = async (req:Request,res:Response,next:NextFunction)=>{
     if(!req.cookies.token){
         res.status(400).json({
             value:false,
-            msg:"faltu data"
+            msg:"token not found"
         })
         
         return;
